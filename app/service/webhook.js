@@ -112,6 +112,11 @@ class WebhookService extends Service {
     const { name, username } = user || {};
     const pipelineUrl = web_url + '/pipelines/' + pipelineId
 
+    // ignore success builds
+    if (status === "success") {
+      return false;
+    }
+
     // find any build not finished (success, failed, skipped)
     const createdBuilds = _.find(builds, { status: 'created' });
     const runningBuilds = _.find(builds, { status: 'running' });
